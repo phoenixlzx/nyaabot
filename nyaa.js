@@ -44,6 +44,10 @@ nyaa.addListener("pm", function (from, text, message) {
 
 nyaa.addListener("message", function(from, to, text, message) {
     // console.log(from + '\n' + to + '\n' + text + '\n' + util.inspect(message, false, null));
+    // handle messages from other bots
+    if (config.otherbots.indexOf(from) !== -1) {
+        text = text.slice(text.indexOf('>') + 2);
+    }
     // handle commands
     if (text.startsWith(config.commandsymbol)) {
         switch (text.slice(1, 2)) {
@@ -52,32 +56,32 @@ nyaa.addListener("message", function(from, to, text, message) {
                     uri: config.searchwiki.host + "/api.php?action=query&format=xml&titles=" + text.slice(3)
                 }, function(error, response, body) {
                     if (error) {
-                       nyaa.say(to, messages.error);
+                       return nyaa.say(to, messages.error);
+                    } else {
+                        parseString(body, function(err, result) {
+                            if (result.api.error || !result.api.query[0].pages[0].page[0].$.pageid) {
+                                return nyaa.say(to, messages.error);
+                            }
+                            nyaa.say(to, config.searchwiki.host + '/index.php?curid=' + result.api.query[0].pages[0].page[0].$.pageid);
+                        });
+
+                        request({
+                            uri: config.searchwiki.host + "/api.php?format=json&action=parse&prop=text&section=0&page=" + text.slice(3)
+                        }, function(err, res, bodydata) {
+                            if (JSON.parse(bodydata).error) {
+                                return nyaa.say(to, messages.error);
+                            }
+                            var wikidata = JSON.parse(bodydata).parse.text['*'];
+                            var options = {
+                                include_script : false,
+                                include_style : false,
+                                compact_whitespace : true
+                            };
+                            wikidata = html_strip.html_strip(wikidata, options);
+
+                            nyaa.say(to, wikidata);
+                        });
                     }
-
-                    parseString(body, function(err, result) {
-                        if (result.api.error) {
-                            return nyaa.say(to, messages.error);
-                        }
-                        nyaa.say(to, config.searchwiki.host + '/index.php?curid=' + result.api.query[0].pages[0].page[0].$.pageid);
-                    });
-
-                    request({
-                        uri: config.searchwiki.host + "/api.php?format=json&action=parse&prop=text&section=0&page=" + text.slice(3)
-                    }, function(err, res, bodydata) {
-                        if (JSON.parse(bodydata).error) {
-                            return nyaa.say(to, messages.error);
-                        }
-                        var wikidata = JSON.parse(bodydata).parse.text['*'];
-                        var options = {
-                            include_script : false,
-                            include_style : false,
-                            compact_whitespace : true
-                        };
-                        wikidata = html_strip.html_strip(wikidata, options);
-
-                        nyaa.say(to, wikidata);
-                    });
                 });
                 break;
             case 'p':
