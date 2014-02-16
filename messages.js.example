@@ -1,0 +1,24 @@
+module.exports = {
+    // refuse to talk with individual
+    refusemessage: "Do not talk to me.",
+    // refuse to execute commands from non-admins
+    refusenonadmin: "You are not one of my admin!",
+    // tell admin command has been received. test purpose only.
+    cmdreceived: "command received",
+    // messages when quitting
+    cmdquit: "Will now quitting.",
+    // something went wrong...
+    error: "It seems something went wrong...",
+
+    play: {
+        commands: [
+	    "Hello",
+	    "Are you a bot?"
+        ],
+        response: [
+            "Nice to meet you.",
+            "Yes I am."
+        ],
+        unknown: "Sorry I cant understand you :-("
+    }
+}

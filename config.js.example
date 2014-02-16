@@ -1,0 +1,59 @@
+module.exports = {
+
+    // IRC Server to connect
+    server: "irc.freenode.net",
+
+    // Bot nickname
+    nick: 'nyaabot',
+    password: 'BotPassword',
+
+    // Server options
+    serveroptions: {
+        // bot username.
+        userName: 'nyaabot',
+        // whatever you want, just fill this blank.
+        realName: 'Nyaacat IRC Bot',
+        // server port yo connect, normally 6667, since we'll use ssl so its 7000.
+        port: 7000,
+        // if you run into problems, set it to true to see what happened.
+        debug: false,
+        // same as above.
+        showErrors: false,
+        // auto rejoin channels
+        autoRejoin: true,
+        // auto reconnect to server on disconnected.
+        autoConnect: true,
+        // channels to join. ['#example1', '#example2']
+        channels: ['#nyaacat'],
+        // use SSL connection.
+        secure: true,
+        // accept slefsigned certificate
+        selfSigned: false,
+        // accept expired certificate
+        certExpired: false,
+        // prevent flood due to too many messages.
+        floodProtection: true,
+        // messages delay, do not change if you dont know what you're doing.
+        floodProtectionDelay: 1000,
+        // open sasl support
+        sasl: false,
+        // whether to strip colors
+        stripColors: true,
+        // leave it here.
+        channelPrefixes: "&#",
+        // messages larger than this length will be split up.
+        messageSplit: 144
+    },
+
+    // admins and commands settings
+    admins: ['phoenixlzx'],
+    // commands should starts with this symbol.
+    commandsymbol: '.',
+
+    // functionality settings
+    searchwiki: {
+        // Wikimedia site without the last '/'
+        host: 'http://minecraft-zh.gamepedia.com'
+    }
+
+} 

@@ -1,0 +1,15 @@
+{
+    "name": "nyaabot",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "start": "node nyaa.js"
+    },
+    "dependencies": {
+        "irc": "*",
+        "htmlstrip-native": "*",
+        "xml2js": "*",
+        "async": "*",
+        "request": "*"
+    }
+}
